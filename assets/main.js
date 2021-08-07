@@ -18,9 +18,11 @@ const repeatBtn = $('.btn-repeat');
 
 const app = {
     currentIndex: 0,
+    oldIndexRandom : [],
     isPlaying: false,
     isRandom: false,
     isRepeat: false,
+    isTimeUpdate: true,
     config: JSON.parse(localStorage.getItem(PLAYER_STORAGE_KEY)) || {},
     songs : [
         {
@@ -38,17 +40,10 @@ const app = {
         },
         
         {
-            name: "Ngẫu Hứng",
-            author: "not yet",
-            path: "./assets/songs/Ngẫu-hứng.webm",
-            image: "./assets/img/coolman.jpg"
-        },
-    
-        {
-            name: "Một triệu khả năng",
-            author: "not yet",
-            path: "./assets/songs/Một Triệu Khả Năng.webm",
-            image: "./assets/img/MTKN.jpg"
+            name: "Sẽ hứa đi cùng nhau",
+            author: "Soobin Hoàng Sơn",
+            path: "./assets/songs/Se-Hua-Di-Cung-Nhau-Di-De-Tro-Ve-3-SOOBIN-Da-LAB.mp3",
+            image: "./assets/img/SHDCN.jpg"
         },
     
         {
@@ -59,39 +54,19 @@ const app = {
         },
 
         {
-            name: "Đi Đi Đi",
-            author: "K-ICM",
-            path: "./assets/songs/Đi Đi Đi.mp3",
-            image: "./assets/img/K-ICM.jpg"
-        },
-    
-        {
-            name: "Em Mỉm Cười Trông Thật Đẹp",
+            name : "SummerTime",
             author: "not yet",
-            path: "./assets/songs/EMCTTD.mp3",
-            image: "./assets/img/EMCTTD.jpg"
+            path: "./assets/songs/Summertime-K-391.mp3",
+            image: "./assets/img/SummerTime.jpg",
         },
-        
+
         {
             name: "Ngẫu Hứng",
             author: "not yet",
             path: "./assets/songs/Ngẫu-hứng.webm",
             image: "./assets/img/coolman.jpg"
         },
-    
-        {
-            name: "Một triệu khả năng",
-            author: "not yet",
-            path: "./assets/songs/Một Triệu Khả Năng.webm",
-            image: "./assets/img/MTKN.jpg"
-        },
-    
-        {
-            name: "Con đường bình phàm",
-            author: "not yet",
-            path: "./assets/songs/Con Đường Bình Phàm.webm",
-            image: "./assets/img/simple-road.jpg"
-        },
+
     ],
 
     setConfig: function (key, value) {
@@ -182,15 +157,25 @@ const app = {
        audio.ontimeupdate = function() {
            if(audio.duration) {
                const progressPercent = Math.floor(audio.currentTime / audio.duration * 100);
-               progress.value = progressPercent;
+               if(_this.isTimeUpdate) {
+                 progress.value = progressPercent;
+               }
            }
        }
 
        //Xử lý khi tua bài hát
        progress.onchange = function(e) {
            const seekTime = audio.duration / 100 * e.target.value;
-           audio.currentTime = seekTime;
+           if(_this.isTimeUpdate) {
+              audio.currentTime = seekTime;
+           }
        }
+
+       //fix lỗi khi tua bài hát
+       const isTouch = 'touchstart' || 'mousedown';
+       progress.addEventListener(isTouch, function() {
+           isTimeUpdate = false;
+       })
 
        //Khi next bài hát
        nextBtn.onclick = function() {
@@ -240,7 +225,8 @@ const app = {
                audio.play();
            }else {
               nextBtn.click();
-           }        
+           }
+           
        }
        
        //Lắng nghe hành vi click vào playlist
@@ -256,10 +242,10 @@ const app = {
                 audio.play();
              }
 
-             //Xử lý khi cleck vào option
+             //Xử lý khi click vào option
              if(clickOption) {
-
-             }
+                 
+             } 
           }
        }
     },
@@ -305,10 +291,14 @@ const app = {
     },
 
     playRandomSong: function() {
-        let newIndex
+        let newIndex;
+        this.oldIndexRandom.push(this.currentIndex);
+        if(this.oldIndexRandom.length === this.songs.length) {
+            this.oldIndexRandom = [];
+        }
         do{
             newIndex = Math.floor(Math.random() * this.songs.length);
-        }while(newIndex == this.currentIndex)
+        }while(this.oldIndexRandom.includes(newIndex))
 
         this.currentIndex = newIndex;
         this.loadCurrentSong();
