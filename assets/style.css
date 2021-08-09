@@ -1,6 +1,8 @@
 :root {
     --primary-color: #ec1f55;
+    --main_second-color: #170f23;
     --text-color: #333;
+    --white-color: #fff;
   }
   
   * {
@@ -23,6 +25,7 @@
     max-width: 480px;
     margin: 0 auto;
   }
+
   
   .player .icon-pause {
     display: none;
@@ -38,7 +41,7 @@
   
   .dashboard {
     padding: 16px 16px 14px;
-    background-color: #fff;
+    background-color: var(--white-color);
     position: fixed;
     top: 0;
     width: 100%;
@@ -46,6 +49,12 @@
     border-bottom: 1px solid #ebebeb;
   }
   
+  .player-change .dashboard{
+    background-color: var(--main_second-color);
+    border-bottom: none;
+    z-index: 10;
+  }
+
   /* HEADER */
   header {
     text-align: center;
@@ -63,10 +72,15 @@
     line-height: 20px;
   }
 
+  .player-change header h2 {
+    color: var(--white-color);
+  }
+
   .title-song {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 8px;
   }
 
   .volume-song {
@@ -78,11 +92,34 @@
     font-size: 24px;
   }
 
+  .player-change .volume-main {
+    color: var(--white-color);
+  }
+
+  .background-on {
+    font-size: 28px;
+    display: flex;
+    align-items: center;
+  }
+
   .icon-off {
     color: var(--primary-color);
-    font-size: 28px;
+  }
+
+  .icon-on {
+    color: var(--white-color);
+    display: none;
+  }
+
+  .icon-change .icon-on {
+    display: block;
   }
   
+  .icon-change .icon-off {
+    display: none;
+  }
+
+
  .background-img-song {
     position: relative;
     width: 220px;
@@ -146,6 +183,10 @@
     font-size: 18px;
   }
   
+  .player-change .control .btn {
+    color: var(--white-color);
+  }
+
   .control .btn.active {
     color: var(--primary-color);
   }
@@ -155,7 +196,7 @@
     height: 56px;
     border-radius: 50%;
     font-size: 24px;
-    color: #fff;
+    color: var(--white-color);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -186,8 +227,12 @@
   
   /* PLAYLIST */
   .playlist {
-    margin-top: 408px;
+    margin-top: 402px;
     padding: 12px;
+  }
+
+  .player-change .playlist {
+    background-color: var(--main_second-color);
   }
   
   .song {
@@ -199,11 +244,16 @@
     border-radius: 5px;
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
   }
+
+  .player-change .song {
+    background-color: #38136e;
+  }
   
   .song.active {
     background-color: var(--primary-color);
   }
   
+
   .song:active {
     opacity: 0.8;
   }
@@ -241,5 +291,12 @@
     padding: 16px 8px;
     color: #999;
     font-size: 18px;
+  }
+
+  .player-change .song .title,
+  .player-change .song .author,
+  .player-change .song .option
+   {
+    color: var(--white-color);
   }
   

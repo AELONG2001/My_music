@@ -18,6 +18,9 @@ const randomBtn = $('.btn-random');
 const repeatBtn = $('.btn-repeat');
 const volumeBtn = $('.volume-song');
 const barVolume = $('.bar-input');
+const volumeMain = $('#bar-input-main');
+const modeBtn = $('.background-on');
+
 
 const app = {
     currentIndex: 0,
@@ -121,6 +124,20 @@ const app = {
            barVolume.classList.toggle('volume-on');
        }
 
+       //Xử lý thay đổi chế độ màn hình
+       modeBtn.onclick = function() {
+           modeBtn.classList.toggle('icon-change');
+           player.classList.toggle('player-change');
+       }
+
+       //Xử lý điều chỉnh âm thanh
+        audio.volume = 1;
+        volumeMain.value = audio.volume * 100;
+
+        volumeMain.oninput = function() {
+            audio.volume = volumeMain.value / 100;
+        }
+
        //Xử lý CD quay / dừng
        const cdThumbAnimation = cdThumb.animate([
            {transform : 'rotate(360deg)'}
@@ -176,7 +193,7 @@ const app = {
        audio.ontimeupdate = function() {
            if(audio.duration) {
                const progressPercent = Math.floor(audio.currentTime / audio.duration * 100);
-               if(_this.isTimeUpdate) {
+               if(isTimeUpdate) {
                  progress.value = progressPercent;
                }
            }
