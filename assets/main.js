@@ -16,6 +16,8 @@ const nextBtn = $('.btn-next');
 const prevBtn = $('.btn-prev');
 const randomBtn = $('.btn-random');
 const repeatBtn = $('.btn-repeat');
+const volumeBtn = $('.volume-song');
+const barVolume = $('.bar-input');
 
 const app = {
     currentIndex: 0,
@@ -24,6 +26,7 @@ const app = {
     isRandom: false,
     isRepeat: false,
     isTimeUpdate: true,
+    isVolume: true,
     config: JSON.parse(localStorage.getItem(PLAYER_STORAGE_KEY)) || {},
     songs : [
         {
@@ -55,7 +58,7 @@ const app = {
         },
 
         {
-            name : "SummerTime",
+            name : "Summer Time",
             author: "not yet",
             path: "./assets/songs/Summertime-K-391.mp3",
             image: "./assets/img/SummerTime.jpg",
@@ -111,6 +114,12 @@ const app = {
        const backgroundCdWidth = backgroundCD.offsetWidth;
        const backgroundCdHeight = backgroundCD.offsetHeight;
        const cdWidth = cd.offsetWidth;
+
+
+       //Xử lý bật tắt volume
+       volumeBtn.onclick = function() {
+           barVolume.classList.toggle('volume-on');
+       }
 
        //Xử lý CD quay / dừng
        const cdThumbAnimation = cdThumb.animate([
