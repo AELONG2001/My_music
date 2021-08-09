@@ -4,6 +4,7 @@ const $$ = document.querySelectorAll.bind(document);
 const PLAYER_STORAGE_KEY = 'My music'
 
 const playList = $('.playlist');
+const backgroundCD = $('.background-img-song');
 const cd = $('.cd');
 const heading = $('h2');
 const cdThumb = $('.cd-thumb');
@@ -107,6 +108,8 @@ const app = {
     handleEvent: function() {
        const _this = this;
        
+       const backgroundCdWidth = backgroundCD.offsetWidth;
+       const backgroundCdHeight = backgroundCD.offsetHeight;
        const cdWidth = cd.offsetWidth;
 
        //Xử lý CD quay / dừng
@@ -122,11 +125,18 @@ const app = {
        //Xử lý phóng to / thu nhỏ CD
        document.onscroll = function() {
            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+           const newBackgroundCdWidth = backgroundCdWidth - scrollTop;
+           const newBackgroundCdHeight = backgroundCdHeight - scrollTop;
            const newCdWidth = cdWidth - scrollTop;
-          
+        
+           //Xử lý scroll cho background CD
+           backgroundCD.style.width = newBackgroundCdWidth > 0 ? newBackgroundCdWidth + 'px' : 0;
+           backgroundCD.style.height = newBackgroundCdHeight > 0 ? newBackgroundCdHeight + 'px' : 0;
+           backgroundCD.style.opacity = newBackgroundCdWidth / backgroundCdWidth;
 
            cd.style.width = newCdWidth > 0 ? newCdWidth + 'px' : 0;
            cd.style.opacity = newCdWidth / cdWidth;
+
        }
 
        //Xử lý khi click play

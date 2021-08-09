@@ -60,13 +60,54 @@
   header h2 {
     color: var(--text-color);
     font-size: 20px;
+    line-height: 20px;
+  }
+
+  .title-song {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .volume-song {
+    position: relative;
+  }
+
+  .volume-main {
+    color: var(--primary-color);
+    font-size: 24px;
+  }
+
+  .icon-off {
+    color: var(--primary-color);
+    font-size: 28px;
   }
   
+ .background-img-song {
+    position: relative;
+    width: 220px;
+    height: 220px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+ }
+
+ .bar-input{
+   position: absolute;
+   width: 100px;
+   height: 10px;
+   background-color: var(--primary-color);
+ }
   /* CD */
   .cd {
+    position: absolute;
     display: flex;
     margin: auto;
     width: 200px;
+    z-index: 10;
   }
   
   .cd-thumb {
@@ -113,6 +154,7 @@
     -webkit-appearance: none;
     height: 6px;
     background: #d3d3d3;
+    border-radius: 4px;
     outline: none;
     opacity: 0.7;
     -webkit-transition: 0.2s;
