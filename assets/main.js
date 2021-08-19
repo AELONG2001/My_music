@@ -56,7 +56,7 @@ const app = {
         {
             name: "Con đường bình phàm",
             author: "not yet",
-            path: "./assets/songs/Con Đường Bình Phàm.webm",
+            path: "./assets/songs/Con Đường Bình Phàm.mp3",
             image: "./assets/img/simple-road.jpg"
         },
 
@@ -70,7 +70,7 @@ const app = {
         {
             name: "Ngẫu Hứng",
             author: "not yet",
-            path: "./assets/songs/Ngẫu-hứng.webm",
+            path: "./assets/songs/Ngẫu-hứng.mp3",
             image: "./assets/img/coolman.jpg"
         },
 
@@ -193,14 +193,14 @@ const app = {
        audio.ontimeupdate = function() {
            if(audio.duration) {
                const progressPercent = Math.floor(audio.currentTime / audio.duration * 100);
-               if(isTimeUpdate) {
+               if(_this.isTimeUpdate) {
                  progress.value = progressPercent;
                }
            }
        }
 
        //Xử lý khi tua bài hát
-       progress.onchange = function(e) {
+       progress.oninput = function(e) {
            const seekTime = audio.duration / 100 * e.target.value;
            if(_this.isTimeUpdate) {
               audio.currentTime = seekTime;
@@ -210,7 +210,7 @@ const app = {
        //fix lỗi khi tua bài hát
        const isTouch = 'touchstart' || 'mousedown';
        progress.addEventListener(isTouch, function() {
-           isTimeUpdate = false;
+          !(_this.isTimeUpdate);
        })
 
        //Khi next bài hát
